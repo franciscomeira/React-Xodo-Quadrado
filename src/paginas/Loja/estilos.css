@@ -1,0 +1,49 @@
+.loja {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* ---------- Logo ---------- */
+.loja__topo {
+  display: flex;
+  justify-content: center;
+}
+
+.loja__logo {
+  width: 100%;
+  max-width: 280px;
+}
+
+/* ---------- Título ---------- */
+.loja__titulo {
+  margin: 48px 0 40px;
+  text-align: center;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--purple-primary);
+}
+
+/* ---------- Vitrine de produtos ---------- */
+.loja__vitrine {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 44px;
+}
+
+.loja__aviso {
+  margin-bottom: 24px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* ---------- Rodapé ---------- */
+.loja__rodape {
+  margin-top: 56px;
+  text-align: center;
+}
+
+.loja__rodape a {
+  font-size: 14px;
+  color: var(--text-muted);
+}

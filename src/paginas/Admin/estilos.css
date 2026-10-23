@@ -1,0 +1,181 @@
+.admin {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* ---------- Topo ---------- */
+.admin__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.admin__titulo {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--purple-primary);
+}
+
+.admin__voltar {
+  font-weight: 700;
+  color: var(--purple-primary);
+  text-decoration: none;
+}
+
+.admin__erro {
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #FDE8E8;
+  color: #B03A3A;
+}
+
+/* ---------- Formulário ---------- */
+.admin__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding: 28px;
+  border-radius: 24px;
+  background: var(--card-bg);
+  box-shadow: 0 6px 24px rgba(133, 97, 197, 0.08);
+}
+
+.admin__formulario h2 {
+  font-size: 22px;
+  color: var(--purple-primary);
+}
+
+.admin__formulario label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.admin__formulario input {
+  padding: 10px 14px;
+  border: 2px solid var(--purple-light);
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 400;
+  color: var(--text-color);
+  background: var(--bg-color);
+}
+
+.admin__formulario input:focus {
+  outline: none;
+  border-color: var(--purple-primary);
+}
+
+.admin__imagem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin__previa {
+  width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: var(--purple-light);
+}
+
+.admin__linha {
+  display: flex;
+  gap: 16px;
+}
+
+/* ---------- Botões ---------- */
+.admin__acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.admin__botao {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 12px;
+  background: var(--purple-primary);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin__botao:hover {
+  background: var(--purple-dark);
+}
+
+.admin__botao--secundario {
+  background: var(--purple-light);
+  color: var(--purple-dark);
+}
+
+.admin__botao--secundario:hover {
+  background: #D9CAF3;
+}
+
+.admin__botao--perigo {
+  background: #FDE8E8;
+  color: #B03A3A;
+}
+
+.admin__botao--perigo:hover {
+  background: #F9D2D2;
+}
+
+/* ---------- Lista de produtos ---------- */
+.admin__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.admin__item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: var(--card-bg);
+}
+
+.admin__foto {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--purple-light);
+}
+
+.admin__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin__info span {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* No celular, os botões descem para baixo do nome */
+@media (max-width: 560px) {
+  .admin__item {
+    flex-wrap: wrap;
+  }
+
+  .admin__linha {
+    flex-direction: column;
+  }
+}

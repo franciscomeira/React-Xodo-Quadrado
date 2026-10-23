@@ -1,0 +1,29 @@
+/* Paleta da loja: mude aqui e o site inteiro acompanha */
+:root {
+  --bg-color: #FCFAEF;
+  --purple-primary: #8561C5;
+  --purple-dark: #6B4AA8;
+  --purple-light: #E8DDF9;
+  --yellow-primary: #F0C34B;
+  --card-bg: #FFFFFF;
+  --text-color: #4A4A4A;
+  --text-muted: #8A8A8A;
+
+  font-family: "Nunito", system-ui, sans-serif;
+  color: var(--text-color);
+  background: var(--bg-color);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg-color);
+}
+
+button {
+  font: inherit;
+}
