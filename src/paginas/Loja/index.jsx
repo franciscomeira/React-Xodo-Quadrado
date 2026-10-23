@@ -43,9 +43,11 @@ function Loja() {
         ))}
       </section>
 
-      <footer className="loja__rodape">
-        <Link to="/admin">Área do administrador</Link>
-      </footer>
+      {import.meta.env.DEV && (
+        <footer className="loja__rodape">
+          <Link to="/admin">Área do administrador</Link>
+        </footer>
+      )}
     </main>
   );
 }

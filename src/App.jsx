@@ -7,7 +7,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Loja />} />
-      <Route path="/admin" element={<Admin />} />
+      {/* O admin só existe rodando local (npm run dev), nunca no site publicado */}
+      {import.meta.env.DEV && <Route path="/admin" element={<Admin />} />}
     </Routes>
   );
 }
