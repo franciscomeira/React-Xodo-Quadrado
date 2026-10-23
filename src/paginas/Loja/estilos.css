@@ -47,3 +47,58 @@
   font-size: 14px;
   color: var(--text-muted);
 }
+
+/* ---------- Botão do carrinho (fixo no canto) ---------- */
+.loja__botao-carrinho {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  background: var(--purple-primary);
+  box-shadow: 0 6px 20px rgba(133, 97, 197, 0.35);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.loja__icone-carrinho {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+}
+
+.loja__botao-carrinho:hover {
+  transform: scale(1.06);
+}
+
+.loja__contador {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 26px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--yellow-primary);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 800;
+  animation: pulo 0.3s ease;
+}
+
+/* Pulinho no contador quando um item é adicionado */
+@keyframes pulo {
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loja__contador {
+    animation: none;
+  }
+}

@@ -7,6 +7,7 @@ import {
   listarProdutos,
   removerProduto,
 } from "../../api";
+import { formatarPreco } from "../../utils/formatarPreco";
 import "./estilos.css";
 
 const FORMULARIO_VAZIO = { name: "", price: "", stock: "", image: "/avatar.png" };
@@ -58,13 +59,6 @@ function imagemParaTexto(arquivo) {
     };
 
     img.src = url;
-  });
-}
-
-function formatarPreco(centavos) {
-  return (centavos / 100).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
   });
 }
 

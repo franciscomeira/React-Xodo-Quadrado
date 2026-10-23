@@ -1,14 +1,13 @@
+import { formatarPreco } from "../../utils/formatarPreco";
 import "./estilos.css";
 
-// O preço chega em centavos (ex.: 1890 = R$ 18,90)
-function formatarPreco(centavos) {
-  return (centavos / 100).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
+function textoBotao(stock, noCarrinho) {
+  if (stock === 0) return "Indisponível";
+  if (noCarrinho >= stock) return "Todo o estoque no carrinho";
+  return noCarrinho > 0 ? `Comprar mais (${noCarrinho} no carrinho)` : "Comprar";
 }
 
-function ProdutoCard({ foto, nome, preco, onComprar, stock }) {
+function ProdutoCard({ foto, nome, preco, onComprar, stock, noCarrinho = 0 }) {
   return (
     <article className="produto-card">
       <div className="produto-card__imagem">
@@ -21,9 +20,9 @@ function ProdutoCard({ foto, nome, preco, onComprar, stock }) {
       <button
         className="produto-card__botao"
         onClick={onComprar}
-        disabled={stock === 0}
+        disabled={noCarrinho >= stock}
       >
-        {stock > 0 ? "Comprar" : "Indisponível"}
+        {textoBotao(stock, noCarrinho)}
       </button>
     </article>
   );
