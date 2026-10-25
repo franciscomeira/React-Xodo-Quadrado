@@ -9,10 +9,12 @@ export const FORMAS_PAGAMENTO = "[FORMAS DE PAGAMENTO]";
 export const REGIAO_ENVIO = "[REGIÃO]";
 
 // Desconto progressivo: preço TOTAL (em centavos) pela quantidade de unidades.
+// Hoje a mesma tabela vale para Bottons, Ímãs e Porta Retrato; para uma
+// categoria ter preços próprios, crie outra tabela igual a esta e use nela.
 // 7 e 9 não estavam na tabela original: usei o valor do meio entre os vizinhos.
-// Acima da maior quantidade, cada unidade extra custa "unidadeExtra".
-// Ex.: 11 bottons = R$ 129,90 + R$ 10,90 = R$ 140,80
-const PRECOS_BOTTONS = {
+// Acima da maior quantidade, TODAS as unidades custam "precoUnidadeAcima".
+// Ex.: 11 bottons = 11 × R$ 10,90 = R$ 119,90
+const TABELA_PRECOS = {
   precos: {
     1: 1590,
     2: 2990,
@@ -25,12 +27,13 @@ const PRECOS_BOTTONS = {
     9: 11690,
     10: 12990,
   },
-  unidadeExtra: 1090,
+  precoUnidadeAcima: 1090,
 };
 
 // Abas da vitrine. O "nome" precisa ser igual à categoria cadastrada no admin.
 // "tamanho" é opcional: sem ele, a medida (Ø ... cm) não aparece.
 // "emMais: true" coloca a categoria dentro da aba "Mais" em vez de ter aba própria.
+// "semLaminacao: true": no carrinho não aparece a escolha de laminação.
 // "tabelaPrecos": no carrinho, os produtos da categoria viram uma linha só e o
 // preço sai da tabela pela quantidade total (o "units" do produto diz quantas
 // unidades ele coloca no carrinho).
@@ -39,12 +42,30 @@ export const CATEGORIAS = [
     nome: "Bottons",
     titulo: "Bottons fotográficos",
     tamanho: "[TAMANHO]",
-    tabelaPrecos: PRECOS_BOTTONS,
+    tabelaPrecos: TABELA_PRECOS,
   },
-  { nome: "Ímãs", titulo: "Ímãs fotográficos", tamanho: "[TAMANHO]" },
-  { nome: "Tags NFC", titulo: "Tags NFC", emMais: true },
-  { nome: "Porta Retrato", titulo: "Porta-retratos", emMais: true },
+  {
+    nome: "Ímãs",
+    titulo: "Ímãs fotográficos",
+    tamanho: "[TAMANHO]",
+    tabelaPrecos: TABELA_PRECOS,
+  },
+  {
+    nome: "Porta Retrato",
+    titulo: "Porta-retratos",
+    semLaminacao: true,
+    tabelaPrecos: TABELA_PRECOS,
+  },
+  { nome: "Tags NFC", titulo: "Tags NFC" },
 ];
+
+// Tipos de laminação (proteção da foto) que a pessoa escolhe no carrinho.
+// O primeiro é o padrão de todo item novo.
+export const LAMINACOES = ["Tradicional", "Holográfica"];
+
+export function temLaminacao(nomeCategoria) {
+  return !CATEGORIAS.find((c) => c.nome === nomeCategoria)?.semLaminacao;
+}
 
 export function linkWhatsapp(mensagem) {
   return `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(mensagem)}`;

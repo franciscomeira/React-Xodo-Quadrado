@@ -8,7 +8,22 @@ export function tabelaDaCategoria(nomeCategoria) {
 export function precoPelaTabela(tabela, quantidade) {
   const maior = Math.max(...Object.keys(tabela.precos).map(Number));
   if (quantidade <= maior) return tabela.precos[quantidade];
-  return tabela.precos[maior] + (quantidade - maior) * tabela.unidadeExtra;
+  return quantidade * tabela.precoUnidadeAcima;
+}
+
+// Menor preço por unidade da tabela e a partir de quantas unidades ele vale
+// (o "o preço cai até R$ X cada · levando N+" do card)
+export function menorPrecoUnitario(tabela) {
+  const quantidades = Object.keys(tabela.precos).map(Number);
+  quantidades.push(Math.max(...quantidades) + 1);
+
+  let melhor = null;
+  for (const quantidade of quantidades) {
+    const cada = precoPelaTabela(tabela, quantidade) / quantidade;
+    if (!melhor || cada < melhor.cada) melhor = { cada, quantidade };
+  }
+
+  return { cada: Math.round(melhor.cada), quantidade: melhor.quantidade };
 }
 
 // Total de uma linha do carrinho e quanto ela custaria sem desconto.

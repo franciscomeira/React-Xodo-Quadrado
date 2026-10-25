@@ -84,9 +84,11 @@
   list-style: none;
 }
 
+/* A laminação fica numa linha própria embaixo, ocupando a largura toda */
 .carrinho__item {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 12px;
   padding: 12px;
   border-radius: 18px;
@@ -150,6 +152,59 @@
 .carrinho__quantidade button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* Escolha da laminação: duas "pílulas", a marcada fica roxa */
+.carrinho__laminacao {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  padding: 0;
+  border: none;
+}
+
+.carrinho__laminacao legend {
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.carrinho__laminacao-opcoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.carrinho__laminacao label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: 2px solid var(--purple-light);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--purple-deep);
+  cursor: pointer;
+}
+
+/* O círculo do rádio some; a pílula inteira mostra o que está marcado */
+.carrinho__laminacao input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carrinho__laminacao label:has(input:checked) {
+  border-color: var(--purple-primary);
+  background: var(--purple-primary);
+  color: #fff;
+}
+
+.carrinho__laminacao label:has(input:focus-visible) {
+  outline: 3px solid var(--yellow-primary);
+  outline-offset: 2px;
 }
 
 .carrinho__remover {

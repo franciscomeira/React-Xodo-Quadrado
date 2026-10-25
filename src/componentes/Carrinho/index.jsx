@@ -1,15 +1,26 @@
 import { useEffect } from "react";
 
-import { linkWhatsapp } from "../../config/loja";
+import { LAMINACOES, linkWhatsapp, temLaminacao } from "../../config/loja";
 import { formatarPreco } from "../../utils/formatarPreco";
 import { calcularItem, proximaFaixa } from "../../utils/precos";
 import "./estilos.css";
+
+// Itens salvos antes da opção existir ficam com a laminação padrão.
+// Categorias sem laminação (ex.: Porta Retrato) devolvem null.
+function laminacaoDo(item) {
+  if (!temLaminacao(item.category)) return null;
+  return item.laminacao ?? LAMINACOES[0];
+}
 
 // Monta o texto do pedido e o link que abre a conversa no WhatsApp
 function linkDoPedido(itens, { desconto, total }) {
   const linhas = itens.map(
     (item) =>
-      `• ${item.quantidade}x ${item.name} — ${formatarPreco(calcularItem(item).total)}`,
+      `• ${item.quantidade}x ${item.name}${
+        laminacaoDo(item)
+          ? ` (laminação ${laminacaoDo(item).toLowerCase()})`
+          : ""
+      } — ${formatarPreco(calcularItem(item).total)}`,
   );
 
   const mensagem = [
@@ -31,6 +42,7 @@ function Carrinho({
   aberto,
   onFechar,
   onAlterarQuantidade,
+  onAlterarLaminacao,
   onRemover,
   onLimpar,
 }) {
@@ -139,6 +151,26 @@ function Carrinho({
                   >
                     Remover
                   </button>
+
+                  {laminacaoDo(item) && (
+                    <fieldset className="carrinho__laminacao">
+                      <legend>Laminação (proteção da foto)</legend>
+                      <div className="carrinho__laminacao-opcoes">
+                        {LAMINACOES.map((tipo) => (
+                          <label key={tipo}>
+                            <input
+                              type="radio"
+                              name={`laminacao-${item.id}`}
+                              value={tipo}
+                              checked={laminacaoDo(item) === tipo}
+                              onChange={() => onAlterarLaminacao(item.id, tipo)}
+                            />
+                            {tipo}
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  )}
                 </li>
               );
             })}

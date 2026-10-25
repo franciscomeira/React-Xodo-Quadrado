@@ -62,6 +62,19 @@
   color: var(--purple-deep);
 }
 
+/* "a partir de" pequeno em cima do preço, "cada" pequeno ao lado */
+.produto-card__a-partir {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.produto-card__cada {
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .produto-card__economia {
   margin-top: 2px;
   font-size: 13px;

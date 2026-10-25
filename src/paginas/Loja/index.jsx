@@ -9,7 +9,8 @@ import ComoFunciona from "../../componentes/ComoFunciona";
 import Rodape from "../../componentes/Rodape";
 import Carrinho from "../../componentes/Carrinho";
 import { listarProdutos } from "../../api";
-import { CATEGORIAS } from "../../config/loja";
+import { CATEGORIAS, LAMINACOES, temLaminacao } from "../../config/loja";
+import { menorPrecoUnitario } from "../../utils/precos";
 import "./estilos.css";
 
 // O carrinho fica salvo no navegador para não sumir ao recarregar a página.
@@ -84,7 +85,12 @@ function Loja() {
     const categoria = CATEGORIAS.find((c) => c.nome === produto.category);
 
     if (!categoria?.tabelaPrecos) {
-      return { ...produto, unidades, quantidade: unidades };
+      return {
+        ...produto,
+        unidades,
+        quantidade: unidades,
+        laminacao: temLaminacao(produto.category) ? LAMINACOES[0] : null,
+      };
     }
 
     // O estoque e o preço base vêm do produto avulso (1 unidade) da categoria
@@ -101,6 +107,7 @@ function Loja() {
       stock: avulso?.stock ?? produto.stock,
       unidades,
       quantidade: unidades,
+      laminacao: temLaminacao(produto.category) ? LAMINACOES[0] : null,
     };
   }
 
@@ -111,14 +118,33 @@ function Loja() {
 
   function adicionarAoCarrinho(produto) {
     const novo = itemDoCarrinho(produto);
+    const comTabela = novo.id.startsWith("categoria:");
 
     setCarrinho((atual) => {
       const item = atual.find((i) => i.id === novo.id);
       if (!item) return [...atual, novo];
 
-      const quantidade = Math.min(item.quantidade + novo.unidades, item.stock);
-      return atual.map((i) => (i.id === novo.id ? { ...i, quantidade } : i));
+      // Com tabela (Bottons), o produto define a quantidade mínima da linha:
+      // 1 botton + kit = 2 (não 3). Mais unidades se ajustam no carrinho.
+      const quantidade = comTabela
+        ? Math.max(item.quantidade, novo.unidades)
+        : item.quantidade + novo.unidades;
+
+      return atual.map((i) =>
+        i.id === novo.id
+          ? { ...i, quantidade: Math.min(quantidade, i.stock) }
+          : i,
+      );
     });
+
+    // O kit abre o carrinho para a pessoa personalizar a quantidade
+    if (novo.unidades > 1) setCarrinhoAberto(true);
+  }
+
+  function alterarLaminacao(id, laminacao) {
+    setCarrinho((atual) =>
+      atual.map((i) => (i.id === id ? { ...i, laminacao } : i)),
+    );
   }
 
   function alterarQuantidade(id, quantidade) {
@@ -180,6 +206,11 @@ function Loja() {
                 stock={itemDoCarrinho(produto).stock}
                 ehKit={(produto.units ?? 1) > 1}
                 economia={economias[produto.id]}
+                precoAPartirDe={
+                  categoria.tabelaPrecos && (produto.units ?? 1) > 1
+                    ? menorPrecoUnitario(categoria.tabelaPrecos)
+                    : null
+                }
                 destaque={produto.id === melhorId}
                 noCarrinho={quantidadeNoCarrinho(produto)}
                 onComprar={() => adicionarAoCarrinho(produto)}
@@ -195,6 +226,7 @@ function Loja() {
           aberto={carrinhoAberto}
           onFechar={fecharCarrinho}
           onAlterarQuantidade={alterarQuantidade}
+          onAlterarLaminacao={alterarLaminacao}
           onRemover={removerDoCarrinho}
           onLimpar={() => setCarrinho([])}
         />

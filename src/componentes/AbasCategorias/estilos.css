@@ -1,22 +1,28 @@
-/* Barra lilás com as abas dividindo o espaço igualmente */
+/* Barra lilás: cada aba ocupa a largura do texto e o espaço que sobra é
+   dividido entre elas, para caberem 4 categorias mesmo no celular */
 .abas {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 4px;
-  max-width: 520px;
-  padding: 4px;
+  display: flex;
+  gap: 2px;
+  max-width: 640px;
+  padding: 3px;
   border-radius: 14px;
   background: var(--purple-light);
 }
 
+.abas__mais {
+  position: relative;
+  flex: 1 1 auto;
+}
+
 .abas__aba {
+  flex: 1 1 auto;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 10px 8px;
+  padding: 9px 8px;
+  font-size: 14px;
   border: none;
   border-radius: 10px;
   background: transparent;
@@ -32,9 +38,6 @@
 }
 
 /* ---------- Aba "Mais" e sua lista ---------- */
-.abas__mais {
-  position: relative;
-}
 
 .abas__seta {
   flex-shrink: 0;
@@ -95,6 +98,21 @@
 .abas__opcao:focus-visible {
   outline: 3px solid var(--yellow-primary);
   outline-offset: 2px;
+}
+
+/* Telas bem estreitas (ex.: 320px): um pouco menor para as 4 caberem */
+@media (max-width: 360px) {
+  .abas__aba {
+    padding: 8px 5px;
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 768px) {
+  .abas__aba {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
