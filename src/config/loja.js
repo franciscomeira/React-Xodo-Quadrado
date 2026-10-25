@@ -39,14 +39,14 @@ const TABELA_PRECOS = {
 // unidades ele coloca no carrinho).
 export const CATEGORIAS = [
   {
-    nome: "Bottons",
-    titulo: "Bottons fotográficos",
+    nome: "Ímãs",
+    titulo: "Ímãs fotográficos",
     tamanho: "[TAMANHO]",
     tabelaPrecos: TABELA_PRECOS,
   },
   {
-    nome: "Ímãs",
-    titulo: "Ímãs fotográficos",
+    nome: "Bottons",
+    titulo: "Bottons fotográficos",
     tamanho: "[TAMANHO]",
     tabelaPrecos: TABELA_PRECOS,
   },
