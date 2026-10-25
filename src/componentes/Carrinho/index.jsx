@@ -1,10 +1,8 @@
 import { useEffect } from "react";
 
+import { linkWhatsapp } from "../../config/loja";
 import { formatarPreco } from "../../utils/formatarPreco";
 import "./estilos.css";
-
-// Número que recebe os pedidos: 55 (Brasil) + 81 (DDD) + telefone, só dígitos
-const WHATSAPP_LOJA = "558191060677";
 
 // Monta o texto do pedido e o link que abre a conversa no WhatsApp
 function linkDoPedido(itens, total) {
@@ -21,7 +19,7 @@ function linkDoPedido(itens, total) {
     `*Total: ${formatarPreco(total)}*`,
   ].join("\n");
 
-  return `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(mensagem)}`;
+  return linkWhatsapp(mensagem);
 }
 
 function Carrinho({ itens, aberto, onFechar, onAlterarQuantidade, onRemover, onLimpar }) {

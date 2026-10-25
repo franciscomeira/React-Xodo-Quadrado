@@ -7,10 +7,19 @@ import {
   listarProdutos,
   removerProduto,
 } from "../../api";
+import { CATEGORIAS } from "../../config/loja";
 import { formatarPreco } from "../../utils/formatarPreco";
 import "./estilos.css";
 
-const FORMULARIO_VAZIO = { name: "", price: "", stock: "", image: "/avatar.png" };
+const FORMULARIO_VAZIO = {
+  name: "",
+  category: CATEGORIAS[0].nome,
+  description: "",
+  units: 1,
+  price: "",
+  stock: "",
+  image: "/avatar.png",
+};
 
 // O preço é guardado em centavos, mas no formulário a pessoa digita em reais
 function paraCentavos(reais) {
@@ -100,6 +109,9 @@ function Admin() {
     setEditandoId(produto.id);
     setFormulario({
       name: produto.name,
+      category: produto.category ?? CATEGORIAS[0].nome,
+      description: produto.description ?? "",
+      units: produto.units ?? 1,
       price: produto.price / 100,
       stock: produto.stock,
       image: produto.image,
@@ -117,6 +129,9 @@ function Admin() {
 
     const produto = {
       name: formulario.name.trim(),
+      category: formulario.category,
+      description: formulario.description.trim(),
+      units: Number(formulario.units),
       price: paraCentavos(formulario.price),
       stock: Number(formulario.stock),
       image: formulario.image.trim(),
@@ -173,6 +188,45 @@ function Admin() {
             required
           />
         </label>
+
+        <label>
+          Descrição
+          <input
+            name="description"
+            value={formulario.description}
+            onChange={alterarCampo}
+            placeholder="Ex.: Uma foto sua, fecho de alfinete"
+          />
+        </label>
+
+        <div className="admin__linha">
+          <label>
+            Categoria
+            <select
+              name="category"
+              value={formulario.category}
+              onChange={alterarCampo}
+            >
+              {CATEGORIAS.map((c) => (
+                <option key={c.nome}>{c.nome}</option>
+              ))}
+            </select>
+          </label>
+
+          {/* Usado para calcular o "R$ X cada · economize" dos kits na loja */}
+          <label>
+            Unidades no kit
+            <input
+              name="units"
+              type="number"
+              min="1"
+              step="1"
+              value={formulario.units}
+              onChange={alterarCampo}
+              required
+            />
+          </label>
+        </div>
 
         <div className="admin__linha">
           <label>
@@ -236,6 +290,7 @@ function Admin() {
             <div className="admin__info">
               <strong>{produto.name}</strong>
               <span>
+                {produto.category ?? "Sem categoria"} ·{" "}
                 {formatarPreco(produto.price)} · {produto.stock} em estoque
               </span>
             </div>
