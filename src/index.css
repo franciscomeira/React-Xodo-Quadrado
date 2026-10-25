@@ -4,7 +4,11 @@
   --purple-primary: #8561C5;
   --purple-dark: #6B4AA8;
   --purple-light: #E8DDF9;
+  --purple-deep: #3E2A78;
+  --purple-border: #DCD0F2;
   --yellow-primary: #F0C34B;
+  --yellow-light: #F7E4A6;
+  --green-savings: #2E7D4F;
   --card-bg: #FFFFFF;
   --text-color: #4A4A4A;
   --text-muted: #8A8A8A;
@@ -26,4 +30,15 @@ body {
 
 button {
   font: inherit;
+}
+
+/* Rolagem suave ao clicar em "Ver produtos" / "Como funciona" */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

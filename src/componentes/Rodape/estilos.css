@@ -1,0 +1,54 @@
+.rodape {
+  margin-top: 56px;
+  scroll-margin-top: 68px;
+  background: var(--purple-deep);
+  color: #fff;
+}
+
+.rodape__conteudo {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rodape__titulo {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.rodape__whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 440px;
+  padding: 13px;
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: var(--purple-deep);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.rodape__whatsapp svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.rodape__info {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.rodape__admin {
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.6;
+}

@@ -1,80 +1,104 @@
+/* Card horizontal: foto à esquerda, informações à direita */
 .produto-card {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 34px;
-  border-radius: 28px;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--purple-light);
+  border-radius: 16px;
   background: var(--card-bg);
-  box-shadow: 0 6px 24px rgba(133, 97, 197, 0.08);
-  text-align: center;
-  transition: transform 0.3s ease;
 }
 
-/* Levanta o card um pouquinho ao passar o mouse */
-.produto-card:hover {
-  transform: translateY(-4px);
+/* Card em destaque ("Melhor custo"): borda roxa e sombra */
+.produto-card--destaque {
+  border: 2px solid var(--purple-primary);
+  box-shadow: 0 8px 24px rgba(133, 97, 197, 0.15);
 }
 
-/* Desliga a animação para quem configurou o sistema para reduzir movimento */
-@media (prefers-reduced-motion: reduce) {
-  .produto-card {
-    transition: none;
-  }
-}
-
-/* Quadrado lilás em volta da foto */
-.produto-card__imagem {
-  width: 100%;
-  max-width: 270px;
-  aspect-ratio: 1;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--purple-light);
+.produto-card__selo {
+  position: absolute;
+  top: -11px;
+  left: 14px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--yellow-primary);
+  color: var(--purple-deep);
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .produto-card__foto {
-  width: 100%;
-  height: 100%;
+  flex-shrink: 0;
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
   object-fit: cover;
-  display: block;
+  background: var(--purple-light);
+}
+
+.produto-card__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .produto-card__nome {
-  margin-top: 32px;
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: var(--purple-primary);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--purple-deep);
+}
+
+.produto-card__descricao {
+  margin-top: 2px;
+  font-size: 13px;
 }
 
 .produto-card__preco {
-  margin: 18px 0 32px;
-  font-size: 34px;
+  margin-top: 8px;
+  font-size: 22px;
   font-weight: 800;
-  color: var(--yellow-primary);
+  color: var(--purple-deep);
 }
 
-/* margin-top: auto empurra o botão para o fim, alinhando os botões dos cards */
-.produto-card__botao {
-  width: 100%;
-  margin-top: auto;
-  padding: 16px;
-  border: none;
-  border-radius: 14px;
-  background: var(--purple-primary);
-  color: #fff;
-  font-size: 22px;
+.produto-card__economia {
+  margin-top: 2px;
+  font-size: 13px;
   font-weight: 700;
+  color: var(--green-savings);
+}
+
+/* Botão padrão: contorno roxo */
+.produto-card__botao {
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid var(--purple-primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--purple-primary);
+  font-weight: 800;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .produto-card__botao:hover {
+  background: var(--purple-light);
+}
+
+/* Botão do card em destaque: roxo cheio */
+.produto-card__botao--cheio {
+  background: var(--purple-primary);
+  color: #fff;
+}
+
+.produto-card__botao--cheio:hover {
   background: var(--purple-dark);
 }
 
-/* Fica depois do :hover para que o hover não mude a cor do botão desativado */
+/* Fica depois do :hover para que o hover não mude o botão desativado */
 .produto-card__botao:disabled {
+  border-color: #DDD8C8;
   background: #DDD8C8;
   color: var(--text-muted);
   cursor: not-allowed;

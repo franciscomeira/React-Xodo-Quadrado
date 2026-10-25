@@ -1,0 +1,56 @@
+.como-funciona {
+  margin-top: 40px;
+  /* Deixa espaço para o menu fixo ao chegar pelo botão "Como funciona" */
+  scroll-margin-top: 88px;
+}
+
+.como-funciona__titulo {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--purple-deep);
+}
+
+.como-funciona__passos {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.como-funciona__passo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--purple-light);
+  border-radius: 14px;
+  background: var(--card-bg);
+}
+
+.como-funciona__numero {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--purple-light);
+  color: var(--purple-deep);
+  font-weight: 800;
+}
+
+.como-funciona__passo strong {
+  color: var(--purple-deep);
+}
+
+.como-funciona__passo p {
+  margin-top: 2px;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .como-funciona__passos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

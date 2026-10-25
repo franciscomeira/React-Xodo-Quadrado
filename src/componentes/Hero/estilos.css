@@ -1,0 +1,76 @@
+.hero {
+  max-width: 640px;
+  padding-top: 24px;
+}
+
+.hero__selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--yellow-light);
+  color: var(--purple-deep);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hero__selo svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.hero__titulo {
+  margin-top: 14px;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--purple-deep);
+}
+
+.hero__texto {
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* Dois botões do mesmo tamanho, lado a lado */
+.hero__botoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+  max-width: 440px;
+}
+
+.hero__botao {
+  padding: 13px 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.hero__botao--cheio {
+  background: var(--purple-primary);
+  color: #fff;
+}
+
+.hero__botao--cheio:hover {
+  background: var(--purple-dark);
+}
+
+.hero__botao--contorno {
+  border: 2px solid var(--purple-border);
+  background: var(--card-bg);
+  color: var(--purple-primary);
+}
+
+.hero__botao--contorno:hover {
+  border-color: var(--purple-primary);
+}
