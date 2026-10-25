@@ -14,6 +14,7 @@ export const CATEGORIAS = [
   { nome: "Bottons", titulo: "Bottons fotográficos", tamanho: "[TAMANHO]" },
   { nome: "Ímãs", titulo: "Ímãs fotográficos", tamanho: "[TAMANHO]" },
   { nome: "Tags NFC", titulo: "Tags NFC" },
+  { nome: "Porta Retrato", titulo: "Porta-retratos" },
 ];
 
 export function linkWhatsapp(mensagem) {

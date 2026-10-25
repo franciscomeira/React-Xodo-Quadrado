@@ -2,7 +2,7 @@ import { PRAZO_PRODUCAO } from "../../config/loja";
 import "./estilos.css";
 
 const PASSOS = [
-  { titulo: "Escolha o produto", texto: "Botton, ímã ou tag NFC, unidade ou kit." },
+  { titulo: "Escolha o produto", texto: "Bottons, ímãs, tags NFC ou porta-retratos, unidade ou kit." },
   { titulo: "Envie sua foto", texto: "Pelo site ou pelo WhatsApp, direto do celular." },
   { titulo: "Receba em casa", texto: `Produção em até ${PRAZO_PRODUCAO} dias úteis.` },
 ];
