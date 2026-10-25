@@ -112,9 +112,20 @@
   color: var(--purple-primary);
 }
 
-.carrinho__info > span {
+.carrinho__preco {
   font-size: 14px;
   color: var(--text-muted);
+}
+
+.carrinho__preco b {
+  color: var(--purple-deep);
+}
+
+.carrinho__dica {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green-savings);
 }
 
 .carrinho__quantidade {
@@ -157,6 +168,24 @@
   flex-direction: column;
   gap: 12px;
   padding: 24px;
+}
+
+/* Subtotal e desconto, alinhados à direita como numa nota */
+.carrinho__resumo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 12px;
+  font-size: 15px;
+}
+
+.carrinho__resumo dd {
+  margin: 0;
+  text-align: right;
+}
+
+.carrinho__desconto {
+  font-weight: 800;
+  color: var(--green-savings);
 }
 
 .carrinho__total {

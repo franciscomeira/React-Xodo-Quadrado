@@ -25,7 +25,7 @@ function ProdutoCard({
     <article
       className={destaque ? "produto-card produto-card--destaque" : "produto-card"}
     >
-      {destaque && <span className="produto-card__selo">Melhor custo</span>}
+      {destaque && <span className="produto-card__selo">Melhor oferta</span>}
 
       <img className="produto-card__foto" src={foto} alt={nome} />
 

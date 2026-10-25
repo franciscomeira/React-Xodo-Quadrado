@@ -2,13 +2,14 @@ import { useEffect } from "react";
 
 import { linkWhatsapp } from "../../config/loja";
 import { formatarPreco } from "../../utils/formatarPreco";
+import { calcularItem, proximaFaixa } from "../../utils/precos";
 import "./estilos.css";
 
 // Monta o texto do pedido e o link que abre a conversa no WhatsApp
-function linkDoPedido(itens, total) {
+function linkDoPedido(itens, { desconto, total }) {
   const linhas = itens.map(
     (item) =>
-      `• ${item.quantidade}x ${item.name} — ${formatarPreco(item.price * item.quantidade)}`
+      `• ${item.quantidade}x ${item.name} — ${formatarPreco(calcularItem(item).total)}`,
   );
 
   const mensagem = [
@@ -16,14 +17,34 @@ function linkDoPedido(itens, total) {
     "",
     ...linhas,
     "",
+    ...(desconto > 0
+      ? [`Desconto progressivo: -${formatarPreco(desconto)}`]
+      : []),
     `*Total: ${formatarPreco(total)}*`,
   ].join("\n");
 
   return linkWhatsapp(mensagem);
 }
 
-function Carrinho({ itens, aberto, onFechar, onAlterarQuantidade, onRemover, onLimpar }) {
-  const total = itens.reduce((soma, item) => soma + item.price * item.quantidade, 0);
+function Carrinho({
+  itens,
+  aberto,
+  onFechar,
+  onAlterarQuantidade,
+  onRemover,
+  onLimpar,
+}) {
+  const resumo = itens.reduce(
+    (soma, item) => {
+      const { total, semDesconto, desconto } = calcularItem(item);
+      return {
+        subtotal: soma.subtotal + semDesconto,
+        desconto: soma.desconto + desconto,
+        total: soma.total + total,
+      };
+    },
+    { subtotal: 0, desconto: 0, total: 0 },
+  );
 
   // Fecha o carrinho com a tecla Esc
   useEffect(() => {
@@ -40,7 +61,9 @@ function Carrinho({ itens, aberto, onFechar, onAlterarQuantidade, onRemover, onL
   return (
     <>
       <div
-        className={aberto ? "carrinho__fundo carrinho__fundo--aberto" : "carrinho__fundo"}
+        className={
+          aberto ? "carrinho__fundo carrinho__fundo--aberto" : "carrinho__fundo"
+        }
         onClick={onFechar}
       />
 
@@ -51,7 +74,11 @@ function Carrinho({ itens, aberto, onFechar, onAlterarQuantidade, onRemover, onL
       >
         <header className="carrinho__topo">
           <h2>Seu carrinho</h2>
-          <button className="carrinho__fechar" onClick={onFechar} aria-label="Fechar">
+          <button
+            className="carrinho__fechar"
+            onClick={onFechar}
+            aria-label="Fechar"
+          >
             ✕
           </button>
         </header>
@@ -60,53 +87,82 @@ function Carrinho({ itens, aberto, onFechar, onAlterarQuantidade, onRemover, onL
           <p className="carrinho__vazio">Seu carrinho está vazio 🥲</p>
         ) : (
           <ul className="carrinho__lista">
-            {itens.map((item) => (
-              <li key={item.id} className="carrinho__item">
-                <img className="carrinho__foto" src={item.image} alt="" />
+            {itens.map((item) => {
+              const { total, desconto } = calcularItem(item);
+              const faixa = proximaFaixa(item);
 
-                <div className="carrinho__info">
-                  <strong>{item.name}</strong>
-                  <span>{formatarPreco(item.price)}</span>
+              return (
+                <li key={item.id} className="carrinho__item">
+                  <img className="carrinho__foto" src={item.image} alt="" />
 
-                  <div className="carrinho__quantidade">
-                    <button
-                      onClick={() => onAlterarQuantidade(item.id, item.quantidade - 1)}
-                      disabled={item.quantidade <= 1}
-                      aria-label="Diminuir"
-                    >
-                      −
-                    </button>
-                    <span>{item.quantidade}</span>
-                    <button
-                      onClick={() => onAlterarQuantidade(item.id, item.quantidade + 1)}
-                      disabled={item.quantidade >= item.stock}
-                      aria-label="Aumentar"
-                    >
-                      +
-                    </button>
+                  <div className="carrinho__info">
+                    <strong>{item.name}</strong>
+                    <span className="carrinho__preco">
+                      {desconto > 0 && <s>{formatarPreco(total + desconto)}</s>}{" "}
+                      <b>{formatarPreco(total)}</b> ·{" "}
+                      {formatarPreco(Math.round(total / item.quantidade))} cada
+                    </span>
+
+                    <div className="carrinho__quantidade">
+                      <button
+                        onClick={() =>
+                          onAlterarQuantidade(item.id, item.quantidade - 1)
+                        }
+                        disabled={item.quantidade <= 1}
+                        aria-label="Diminuir"
+                      >
+                        −
+                      </button>
+                      <span>{item.quantidade}</span>
+                      <button
+                        onClick={() =>
+                          onAlterarQuantidade(item.id, item.quantidade + 1)
+                        }
+                        disabled={item.quantidade >= item.stock}
+                        aria-label="Aumentar"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    {faixa && item.quantidade < item.stock && (
+                      <span className="carrinho__dica">
+                        Com +{faixa.faltam} sai {formatarPreco(faixa.cada)} cada
+                      </span>
+                    )}
                   </div>
-                </div>
 
-                <button
-                  className="carrinho__remover"
-                  onClick={() => onRemover(item.id)}
-                  aria-label={`Remover ${item.name}`}
-                >
-                  Remover
-                </button>
-              </li>
-            ))}
+                  <button
+                    className="carrinho__remover"
+                    onClick={() => onRemover(item.id)}
+                    aria-label={`Remover ${item.name}`}
+                  >
+                    Remover
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         )}
 
         {itens.length > 0 && (
           <footer className="carrinho__rodape">
+            {resumo.desconto > 0 && (
+              <dl className="carrinho__resumo">
+                <dt>Subtotal</dt>
+                <dd>{formatarPreco(resumo.subtotal)}</dd>
+                <dt>Desconto progressivo</dt>
+                <dd className="carrinho__desconto">
+                  −{formatarPreco(resumo.desconto)}
+                </dd>
+              </dl>
+            )}
             <p className="carrinho__total">
-              Total <strong>{formatarPreco(total)}</strong>
+              Total <strong>{formatarPreco(resumo.total)}</strong>
             </p>
             <a
               className="carrinho__finalizar"
-              href={linkDoPedido(itens, total)}
+              href={linkDoPedido(itens, resumo)}
               target="_blank"
               rel="noopener noreferrer"
             >

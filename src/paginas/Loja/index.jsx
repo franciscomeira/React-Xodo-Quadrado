@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import Menu from "../../componentes/Menu";
 import Hero from "../../componentes/Hero";
 import Diferenciais from "../../componentes/Diferenciais";
+import AbasCategorias from "../../componentes/AbasCategorias";
 import ProdutoCard from "../../componentes/ProdutoCard";
 import ComoFunciona from "../../componentes/ComoFunciona";
 import Rodape from "../../componentes/Rodape";
@@ -11,8 +12,9 @@ import { listarProdutos } from "../../api";
 import { CATEGORIAS } from "../../config/loja";
 import "./estilos.css";
 
-// O carrinho fica salvo no navegador para não sumir ao recarregar a página
-const CHAVE_CARRINHO = "xodo-carrinho";
+// O carrinho fica salvo no navegador para não sumir ao recarregar a página.
+// (v2: formato novo com desconto progressivo; carrinhos antigos são ignorados)
+const CHAVE_CARRINHO = "xodo-carrinho-v2";
 
 function carrinhoSalvo() {
   try {
@@ -75,20 +77,47 @@ function Loja() {
   const produtosDaAba = produtos.filter((p) => p.category === abaAtiva);
   const { economias, melhorId } = calcularEconomias(produtosDaAba);
 
-  function quantidadeNoCarrinho(id) {
+  // Produtos de categoria com tabela de preços (ex.: Bottons) viram uma linha
+  // só no carrinho, somando as unidades; os outros ficam um por produto.
+  function itemDoCarrinho(produto) {
+    const unidades = produto.units ?? 1;
+    const categoria = CATEGORIAS.find((c) => c.nome === produto.category);
+
+    if (!categoria?.tabelaPrecos) {
+      return { ...produto, unidades, quantidade: unidades };
+    }
+
+    // O estoque e o preço base vêm do produto avulso (1 unidade) da categoria
+    const avulso = produtos.find(
+      (p) => p.category === produto.category && (p.units ?? 1) === 1,
+    );
+
+    return {
+      id: `categoria:${categoria.nome}`,
+      category: categoria.nome,
+      name: categoria.titulo,
+      image: (avulso ?? produto).image,
+      price: categoria.tabelaPrecos.precos[1],
+      stock: avulso?.stock ?? produto.stock,
+      unidades,
+      quantidade: unidades,
+    };
+  }
+
+  function quantidadeNoCarrinho(produto) {
+    const id = itemDoCarrinho(produto).id;
     return carrinho.find((item) => item.id === id)?.quantidade ?? 0;
   }
 
   function adicionarAoCarrinho(produto) {
+    const novo = itemDoCarrinho(produto);
+
     setCarrinho((atual) => {
-      const item = atual.find((i) => i.id === produto.id);
+      const item = atual.find((i) => i.id === novo.id);
+      if (!item) return [...atual, novo];
 
-      if (!item) return [...atual, { ...produto, quantidade: 1 }];
-      if (item.quantidade >= produto.stock) return atual;
-
-      return atual.map((i) =>
-        i.id === produto.id ? { ...i, quantidade: i.quantidade + 1 } : i,
-      );
+      const quantidade = Math.min(item.quantidade + novo.unidades, item.stock);
+      return atual.map((i) => (i.id === novo.id ? { ...i, quantidade } : i));
     });
   }
 
@@ -117,21 +146,11 @@ function Loja() {
         <Diferenciais />
 
         <section id="produtos" className="loja__produtos">
-          <div className="loja__abas" role="tablist">
-            {CATEGORIAS.map((c) => (
-              <button
-                key={c.nome}
-                role="tab"
-                aria-selected={c.nome === abaAtiva}
-                className={
-                  c.nome === abaAtiva ? "loja__aba loja__aba--ativa" : "loja__aba"
-                }
-                onClick={() => setAbaAtiva(c.nome)}
-              >
-                {c.nome}
-              </button>
-            ))}
-          </div>
+          <AbasCategorias
+            categorias={CATEGORIAS}
+            ativa={abaAtiva}
+            onEscolher={setAbaAtiva}
+          />
 
           <div className="loja__cabecalho">
             <h2 className="loja__titulo">{categoria.titulo}</h2>
@@ -158,11 +177,11 @@ function Loja() {
                 nome={produto.name}
                 descricao={produto.description}
                 preco={produto.price}
-                stock={produto.stock}
+                stock={itemDoCarrinho(produto).stock}
                 ehKit={(produto.units ?? 1) > 1}
                 economia={economias[produto.id]}
                 destaque={produto.id === melhorId}
-                noCarrinho={quantidadeNoCarrinho(produto.id)}
+                noCarrinho={quantidadeNoCarrinho(produto)}
                 onComprar={() => adicionarAoCarrinho(produto)}
               />
             ))}

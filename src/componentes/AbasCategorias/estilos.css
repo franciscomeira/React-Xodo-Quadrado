@@ -1,0 +1,104 @@
+/* Barra lilás com as abas dividindo o espaço igualmente */
+.abas {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  max-width: 520px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--purple-light);
+}
+
+.abas__aba {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--purple-deep);
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.abas__aba--ativa {
+  background: var(--card-bg);
+  box-shadow: 0 2px 6px rgba(62, 42, 120, 0.08);
+}
+
+/* ---------- Aba "Mais" e sua lista ---------- */
+.abas__mais {
+  position: relative;
+}
+
+.abas__seta {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s;
+}
+
+.abas__seta--aberta {
+  transform: rotate(180deg);
+}
+
+.abas__lista {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 5;
+  min-width: 180px;
+  padding: 6px;
+  border: 1px solid var(--purple-light);
+  border-radius: 14px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 32px rgba(62, 42, 120, 0.15);
+  list-style: none;
+}
+
+.abas__opcao {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--purple-deep);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.abas__opcao:hover {
+  background: var(--purple-light);
+}
+
+.abas__opcao--ativa {
+  color: var(--purple-primary);
+}
+
+.abas__opcao--ativa::after {
+  content: " ✓";
+}
+
+/* Contorno visível para quem navega pelo teclado */
+.abas__aba:focus-visible,
+.abas__opcao:focus-visible {
+  outline: 3px solid var(--yellow-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .abas__seta {
+    transition: none;
+  }
+}

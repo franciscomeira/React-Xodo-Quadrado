@@ -11,41 +11,6 @@
   scroll-margin-top: 88px;
 }
 
-/* Abas das categorias: dividem o espaço igualmente; se não couberem
-   (ex.: celular), a barra rola para o lado em vez de quebrar o texto */
-.loja__abas {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(max-content, 1fr);
-  gap: 4px;
-  max-width: 640px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding: 4px;
-  border-radius: 14px;
-  background: var(--purple-light);
-}
-
-.loja__abas::-webkit-scrollbar {
-  display: none;
-}
-
-.loja__aba {
-  padding: 10px 14px;
-  white-space: nowrap;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--purple-deep);
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.loja__aba--ativa {
-  background: var(--card-bg);
-  box-shadow: 0 2px 6px rgba(62, 42, 120, 0.08);
-}
-
 .loja__cabecalho {
   display: flex;
   align-items: baseline;
