@@ -4,9 +4,9 @@
 // Número que recebe os pedidos: 55 (Brasil) + 81 (DDD) + telefone, só dígitos
 export const WHATSAPP_LOJA = "558191060677";
 
-export const PRAZO_PRODUCAO = "[PRAZO]";
-export const FORMAS_PAGAMENTO = "[FORMAS DE PAGAMENTO]";
-export const REGIAO_ENVIO = "[REGIÃO]";
+export const PRAZO_PRODUCAO = "2";
+export const FORMAS_PAGAMENTO = "Pix";
+export const REGIAO_ENVIO = "Recife/PE e região metropolitana";
 
 // Desconto progressivo: preço TOTAL (em centavos) pela quantidade de unidades.
 // Hoje a mesma tabela vale para Bottons, Ímãs e Porta Retrato; para uma
