@@ -134,6 +134,32 @@
 }
 
 /* ---------- Lista de produtos ---------- */
+/* ---------- Grupos por categoria ---------- */
+.admin__grupo + .admin__grupo {
+  margin-top: 28px;
+}
+
+.admin__grupo-titulo {
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--purple-deep);
+}
+
+.admin__grupo-titulo span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.admin__vazio {
+  padding: 14px 16px;
+  border: 1px dashed var(--purple-border);
+  border-radius: 14px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
 .admin__lista {
   display: flex;
   flex-direction: column;

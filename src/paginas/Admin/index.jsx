@@ -71,6 +71,23 @@ function imagemParaTexto(arquivo) {
   });
 }
 
+// Agrupa os produtos pelas categorias da loja, na mesma ordem das abas.
+// Produtos com categoria que não existe mais ficam em "Sem categoria".
+function gruposDeProdutos(produtos) {
+  const nomes = CATEGORIAS.map((c) => c.nome);
+  const grupos = CATEGORIAS.map((c) => ({
+    nome: c.nome,
+    produtos: produtos.filter((p) => p.category === c.nome),
+  }));
+
+  const semCategoria = produtos.filter((p) => !nomes.includes(p.category));
+  if (semCategoria.length > 0) {
+    grupos.push({ nome: "Sem categoria", produtos: semCategoria });
+  }
+
+  return grupos;
+}
+
 function Admin() {
   const [produtos, setProdutos] = useState([]);
   const [formulario, setFormulario] = useState(FORMULARIO_VAZIO);
@@ -282,36 +299,53 @@ function Admin() {
         </div>
       </form>
 
-      <ul className="admin__lista">
-        {produtos.map((produto) => (
-          <li key={produto.id} className="admin__item">
-            <img className="admin__foto" src={produto.image} alt="" />
+      {/* Mesma organização da loja: um grupo por categoria, na ordem das abas */}
+      {gruposDeProdutos(produtos).map((grupo) => (
+        <section key={grupo.nome} className="admin__grupo">
+          <h2 className="admin__grupo-titulo">
+            {grupo.nome}{" "}
+            <span>
+              ({grupo.produtos.length}{" "}
+              {grupo.produtos.length === 1 ? "produto" : "produtos"})
+            </span>
+          </h2>
 
-            <div className="admin__info">
-              <strong>{produto.name}</strong>
-              <span>
-                {produto.category ?? "Sem categoria"} ·{" "}
-                {formatarPreco(produto.price)} · {produto.stock} em estoque
-              </span>
-            </div>
+          {grupo.produtos.length === 0 ? (
+            <p className="admin__vazio">Nenhum produto nesta categoria.</p>
+          ) : (
+            <ul className="admin__lista">
+              {grupo.produtos.map((produto) => (
+                <li key={produto.id} className="admin__item">
+                  <img className="admin__foto" src={produto.image} alt="" />
 
-            <div className="admin__acoes">
-              <button
-                className="admin__botao admin__botao--secundario"
-                onClick={() => editar(produto)}
-              >
-                Editar
-              </button>
-              <button
-                className="admin__botao admin__botao--perigo"
-                onClick={() => excluir(produto)}
-              >
-                Excluir
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+                  <div className="admin__info">
+                    <strong>{produto.name}</strong>
+                    <span>
+                      {formatarPreco(produto.price)} · {produto.stock} em
+                      estoque
+                    </span>
+                  </div>
+
+                  <div className="admin__acoes">
+                    <button
+                      className="admin__botao admin__botao--secundario"
+                      onClick={() => editar(produto)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="admin__botao admin__botao--perigo"
+                      onClick={() => excluir(produto)}
+                    >
+                      Excluir
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))}
     </main>
   );
 }
