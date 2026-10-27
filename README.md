@@ -2,7 +2,7 @@
 
 Loja online de produtos fotográficos personalizados — ímãs, bottons, porta-retratos e tags NFC. A pessoa escolhe os produtos, monta o carrinho e finaliza o pedido pelo WhatsApp.
 
-Feita com **React 19**, **Vite** e **React Router**. Em desenvolvimento, os produtos ficam no `db.json` e são editados por um painel admin servido pelo **json-server**.
+Feita com **React 19**, **Vite** e **React Router**. No seu computador, os produtos ficam no `db.json` e são editados por um painel admin servido pelo **json-server**.
 
 ## Funcionalidades
 
@@ -12,7 +12,7 @@ Feita com **React 19**, **Vite** e **React Router**. Em desenvolvimento, os prod
 - **Laminação** — no carrinho, cada categoria escolhe Tradicional ou Holográfica (exceto Porta Retrato).
 - **Carrinho salvo no navegador** — não some ao recarregar a página.
 - **Pedido pelo WhatsApp** — o botão "Finalizar" abre o WhatsApp com o pedido já escrito (itens, laminação, desconto e total).
-- **Painel admin** (só local) — cadastrar, editar e excluir produtos, com upload e compressão da foto.
+- **Painel de administração** (só no seu computador) — cadastrar, editar e excluir produtos, com upload e compressão da foto.
 
 ## Como rodar
 
@@ -38,9 +38,9 @@ Se a página mostrar "Não foi possível carregar os produtos", a API não está
 
 | Comando | O que faz |
 |---|---|
-| `npm run build` | Gera a versão de produção em `dist/` |
-| `npm run preview` | Abre a versão de produção localmente (como fica na Vercel) |
-| `npm run lint` | Verifica o código com o ESLint |
+| `npm run build` | Gera a versão final do site, pronta para publicar, na pasta `dist/` |
+| `npm run preview` | Abre essa versão final no seu computador, do jeito que fica na Vercel |
+| `npm run lint` | Procura erros e problemas de padrão no código (ESLint) |
 
 ## Onde mudar cada coisa
 
@@ -95,7 +95,7 @@ Os produtos ficam no [`db.json`](db.json) e são editados pelo admin. Campos de 
 | `stock` | `50` | O limite no carrinho usa o estoque do produto avulso |
 | `image` | `/produtos/ima.webp` | Caminho em `public/` ou imagem enviada pelo admin |
 
-Fotos de produto ficam em `public/produtos/` (versões otimizadas em webp). Os originais em alta resolução estão em `src/assets/`.
+Fotos de produto ficam em `public/produtos/` (versões reduzidas e comprimidas, no formato WebP). Os originais em alta resolução estão em `src/assets/`.
 
 ## Estrutura
 
@@ -109,7 +109,7 @@ src/
 │   └── precos.js        Desconto progressivo e dicas de faixa
 ├── paginas/
 │   ├── Loja/            Página inicial e lógica do carrinho
-│   └── Admin/           Painel de produtos (só em desenvolvimento)
+│   └── Admin/           Painel de produtos (só no seu computador)
 └── componentes/
     ├── Menu/            Menu fixo com logo, links e botão do carrinho
     ├── Hero/            Título e chamada do topo
@@ -123,16 +123,16 @@ src/
 
 ## Publicação (Vercel)
 
-O site é publicado na Vercel a cada `git push` na branch `main`.
+O site é publicado na Vercel automaticamente sempre que um envio (`git push`) chega à linha principal do repositório (`main`).
 
-Em produção **não existe json-server**: a loja lê os produtos direto do `db.json`, que vai junto no build, e a rota `/admin` não é incluída. Para mudar produtos:
+No site publicado **não existe json-server**: a loja lê os produtos direto do `db.json`, que vai junto na versão final, e a página `/admin` não é incluída. Para mudar produtos:
 
 1. Rode `npm run api` e `npm run dev`.
 2. Edite os produtos em http://localhost:5173/admin.
-3. Faça `git add`, `git commit` e `git push` — a Vercel publica a nova versão em cerca de 1 minuto.
+3. Salve e envie as mudanças com `git add .`, `git commit -m "descrição"` e `git push` — a Vercel publica a nova versão em cerca de 1 minuto.
 
 ## Limitações conhecidas
 
-- O admin não tem login; por isso só existe rodando localmente.
+- O painel de administração não tem login; por isso só existe rodando no seu computador.
 - O json-server aceita requisições de até 100 KB: o admin reduz as fotos enviadas para caber nesse limite.
 - Não há pagamento online: o pedido é fechado pelo WhatsApp.
