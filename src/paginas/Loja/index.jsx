@@ -14,8 +14,8 @@ import { menorPrecoUnitario } from "../../utils/precos";
 import "./estilos.css";
 
 // O carrinho fica salvo no navegador para não sumir ao recarregar a página.
-// (v2: formato novo com desconto progressivo; carrinhos antigos são ignorados)
-const CHAVE_CARRINHO = "xodo-carrinho-v2";
+// (v3: Porta Retrato sem desconto progressivo; carrinhos antigos são ignorados)
+const CHAVE_CARRINHO = "xodo-carrinho-v3";
 
 function carrinhoSalvo() {
   try {

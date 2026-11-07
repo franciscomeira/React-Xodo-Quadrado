@@ -7,8 +7,8 @@ Feita com **React 19**, **Vite** e **React Router**. No seu computador, os produ
 ## Funcionalidades
 
 - **Vitrine por categoria** — abas Ímãs, Bottons, Porta Retrato e Tags NFC.
-- **Dois cards por categoria** — o avulso (adiciona 1 unidade) e o de quantidade personalizada (começa com 2 e a pessoa ajusta no carrinho).
-- **Desconto progressivo** — o preço total sai de uma tabela pela quantidade; o carrinho mostra subtotal, desconto, preço por unidade e quanto falta para a próxima faixa.
+- **Dois cards por categoria** — o avulso (adiciona 1 unidade) e o de quantidade personalizada (começa com 2 e a pessoa ajusta no carrinho). Porta Retrato tem só o avulso.
+- **Desconto progressivo** (Ímãs e Bottons) — o preço total sai de uma tabela pela quantidade; o carrinho mostra subtotal, desconto, preço por unidade e quanto falta para a próxima faixa.
 - **Laminação** — no carrinho, cada categoria escolhe Tradicional ou Holográfica (exceto Porta Retrato).
 - **Carrinho salvo no navegador** — não some ao recarregar a página.
 - **Pedido pelo WhatsApp** — o botão "Finalizar" abre o WhatsApp com o pedido já escrito (itens, laminação, desconto e total).
@@ -77,7 +77,7 @@ A primeira categoria da lista é a aba que abre por padrão.
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Total (R$) | 15,90 | 29,90 | 42,90 | 55,90 | 68,90 | 79,90 | 91,90 | 103,90 | 116,90 | 129,90 | 10,90 cada |
 
-Hoje Ímãs, Bottons e Porta Retrato usam a mesma tabela. Para uma categoria ter preços próprios, crie outra tabela no mesmo formato e use-a no `tabelaPrecos` dela.
+Hoje Ímãs e Bottons usam a mesma tabela. Porta Retrato não tem desconto progressivo: só o card da unidade (R$ 39,90), e a quantidade se ajusta no carrinho. Para uma categoria ter preços próprios, crie outra tabela no mesmo formato e use-a no `tabelaPrecos` dela.
 
 > O preço exibido no card vem do `db.json`. Ao mudar a tabela, ajuste também o preço dos produtos no admin para o card e o carrinho mostrarem o mesmo valor.
 

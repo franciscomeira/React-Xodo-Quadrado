@@ -46,17 +46,7 @@
       "category": "Porta Retrato",
       "description": "Uma foto sua, pronta para expor",
       "units": 1,
-      "price": 1590,
-      "stock": 50,
-      "image": "/produtos/porta-retrato.webp"
-    },
-    {
-      "id": "6",
-      "name": "Quantidade personalizada",
-      "category": "Porta Retrato",
-      "description": "Escolha a quantidade do produto",
-      "units": 2,
-      "price": 2990,
+      "price": 3990,
       "stock": 50,
       "image": "/produtos/porta-retrato.webp"
     }

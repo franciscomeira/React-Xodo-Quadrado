@@ -9,7 +9,7 @@ export const FORMAS_PAGAMENTO = "Pix";
 export const REGIAO_ENVIO = "Recife/PE e região metropolitana";
 
 // Desconto progressivo: preço TOTAL (em centavos) pela quantidade de unidades.
-// Hoje a mesma tabela vale para Bottons, Ímãs e Porta Retrato; para uma
+// Hoje a mesma tabela vale para Bottons e Ímãs; para uma
 // categoria ter preços próprios, crie outra tabela igual a esta e use nela.
 // 7 e 9 não estavam na tabela original: usei o valor do meio entre os vizinhos.
 // Acima da maior quantidade, TODAS as unidades custam "precoUnidadeAcima".
@@ -54,7 +54,6 @@ export const CATEGORIAS = [
     nome: "Porta Retrato",
     titulo: "Porta-retratos",
     semLaminacao: true,
-    tabelaPrecos: TABELA_PRECOS,
   },
   { nome: "Tags NFC", titulo: "Tags NFC" },
 ];
