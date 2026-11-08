@@ -10,18 +10,12 @@ function Hero() {
         Novidade: bottons
       </span>
 
-      <h1 className="hero__titulo">Ímãs e bottons fotográficos</h1>
-
-      <p className="hero__texto">Transforme suas lembranças em xodós! 💜</p>
+      <h1 className="hero__titulo">Transforme suas lembranças em xodós!</h1>
 
       <p className="hero__texto">
         Na Xodó Quadrado, suas fotos ganham vida em ímãs fotográficos e bottons
         personalizados, feitos para decorar, presentear e eternizar momentos
         especiais.
-      </p>
-
-      <p className="hero__texto">
-        Xodó Quadrado — deixe à vista o que faz parte de você.
       </p>
 
       <div className="hero__botoes">
